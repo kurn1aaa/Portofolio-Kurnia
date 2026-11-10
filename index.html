@@ -1,0 +1,985 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio | Kurnia</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            /* Tema Merah Soft / Marun Elegan */
+            --red-soft: #a32a2a;
+            --red-dark: #6b0000;
+            --red-accent: #d9534f;
+            --cream: #fffbfa;
+            --cream-2: #fdf5f5;
+            --text-dark: #3d2c2c;
+            --text-muted: #8a7373;
+            --white: #ffffff;
+            --shadow-soft: 0 15px 40px rgba(163, 42, 42, 0.08);
+            --shadow-hover: 0 25px 60px rgba(163, 42, 42, 0.15);
+            --gradient: linear-gradient(135deg, #a32a2a 0%, #d9534f 100%);
+            --gradient-soft: linear-gradient(135deg, #fdf5f5 0%, #fce4e4 100%);
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: var(--cream);
+            color: var(--text-dark);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* ===== FLOATING DECOR (Blob) ===== */
+        .decor {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(80px);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .decor-1 {
+            width: 400px; height: 400px;
+            background: rgba(217, 83, 79, 0.15);
+            top: -100px; right: -100px;
+            animation: blob 15s infinite ease-in-out;
+        }
+
+        .decor-2 {
+            width: 350px; height: 350px;
+            background: rgba(255, 228, 236, 0.6);
+            bottom: 20%; left: -150px;
+            animation: blob 18s infinite ease-in-out reverse;
+        }
+
+        @keyframes blob {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(40px, -50px) scale(1.1); }
+            66% { transform: translate(-30px, 30px) scale(0.9); }
+        }
+
+        /* ===== NAVBAR ===== */
+        nav {
+            position: fixed;
+            top: 20px; left: 50%;
+            transform: translateX(-50%);
+            width: calc(100% - 60px);
+            max-width: 1100px;
+            padding: 14px 28px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(20px);
+            border-radius: 50px;
+            border: 1px solid rgba(163, 42, 42, 0.1);
+            z-index: 100;
+            box-shadow: var(--shadow-soft);
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+
+        .logo span { color: var(--red-soft); font-style: italic; }
+
+        nav ul { display: flex; list-style: none; gap: 4px; }
+
+        nav a {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: 0.3s;
+            font-weight: 500;
+            font-size: 13px;
+            padding: 8px 16px;
+            border-radius: 30px;
+        }
+
+        nav a:hover {
+            color: var(--white);
+            background: var(--gradient);
+            box-shadow: 0 5px 15px rgba(163, 42, 42, 0.3);
+        }
+
+        /* ===== HERO ===== */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 140px 8% 80px;
+            gap: 60px;
+            position: relative;
+        }
+
+        .hero-text {
+            flex: 1;
+            max-width: 600px;
+            animation: fadeUpHero 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+        }
+
+        .hero-text h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 58px;
+            margin-bottom: 12px;
+            line-height: 1.1;
+            color: var(--text-dark);
+            font-weight: 700;
+        }
+
+        .hero-text h1 .highlight {
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-style: italic;
+        }
+
+        /* Efek Typing Aesthetic */
+        .typing-container {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            color: var(--red-soft);
+            font-size: 20px;
+            font-weight: 600;
+            height: 35px;
+            display: flex;
+            align-items: center;
+            margin-bottom: 22px;
+        }
+
+        .cursor {
+            display: inline-block;
+            width: 3px;
+            background-color: var(--red-soft);
+            animation: blink 1s step-end infinite;
+            margin-left: 5px;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        .hero-text p {
+            color: var(--text-muted);
+            line-height: 1.9;
+            margin-bottom: 35px;
+            font-size: 15px;
+            text-align: justify;
+        }
+
+        .hero-text p strong { color: var(--red-soft); }
+
+        .btn-group { display: flex; gap: 15px; flex-wrap: wrap; }
+
+        .btn {
+            padding: 14px 32px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background: var(--gradient);
+            color: var(--white);
+            box-shadow: 0 10px 30px rgba(163, 42, 42, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 0 15px 40px rgba(163, 42, 42, 0.4);
+        }
+
+        .btn-outline {
+            border: 2px solid var(--red-soft);
+            color: var(--red-soft);
+            background: var(--white);
+        }
+
+        .btn-outline:hover {
+            background: var(--red-soft);
+            color: var(--white);
+            transform: translateY(-4px);
+        }
+
+        .btn i { transition: 0.3s; }
+        .btn:hover i { transform: translateX(3px); }
+
+        /* ===== HERO IMAGE ===== */
+        .hero-visual {
+            position: relative;
+            flex-shrink: 0;
+            animation: fadeUpHero 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) 0.3s forwards;
+            opacity: 0;
+        }
+
+        @keyframes fadeUpHero {
+            0% { opacity: 0; transform: translateY(40px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        .hero-img-wrapper {
+            width: 340px;
+            height: 340px;
+            border-radius: 50%;
+            background: var(--gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 50px rgba(163, 42, 42, 0.2), inset 0 0 20px rgba(255, 255, 255, 0.5);
+            position: relative;
+            animation: float 5s ease-in-out infinite;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .hero-img-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: 50% 20%; 
+            border-radius: 50%;
+            display: block;
+        }
+
+        .hero-img-wrapper::before {
+            content: '';
+            position: absolute;
+            inset: -20px;
+            border-radius: 50%;
+            border: 2px dashed rgba(163, 42, 42, 0.4);
+            animation: rotate 25s linear infinite;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .hero-img-wrapper::after {
+            content: '';
+            position: absolute;
+            inset: -40px;
+            border-radius: 50%;
+            border: 1px solid rgba(163, 42, 42, 0.15);
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-18px); }
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* ===== SECTION ===== */
+        section { padding: 100px 8%; position: relative; }
+
+        .section-header { text-align: center; margin-bottom: 60px; }
+
+        .section-label {
+            display: inline-block;
+            background: var(--gradient-soft);
+            color: var(--red-soft);
+            padding: 6px 18px;
+            border-radius: 50px;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+            border: 1px solid rgba(163, 42, 42, 0.1);
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 42px;
+            color: var(--text-dark);
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .section-title span { color: var(--red-soft); font-style: italic; }
+
+        .section-subtitle { color: var(--text-muted); font-size: 15px; }
+
+        /* ===== ABOUT ===== */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: stretch;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .about-text {
+            background: var(--white);
+            padding: 40px;
+            border-radius: 28px;
+            box-shadow: var(--shadow-soft);
+            border: 1px solid rgba(163, 42, 42, 0.08);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .about-text p {
+            color: var(--text-muted);
+            line-height: 1.9;
+            margin-bottom: 15px;
+            font-size: 15px;
+            text-align: justify;
+        }
+
+        .about-text p strong { color: var(--red-soft); font-weight: 700; }
+
+        .info-list {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-auto-rows: 1fr;
+            gap: 16px;
+        }
+
+        .info-item {
+            background: var(--white);
+            padding: 20px 22px;
+            border-radius: 20px;
+            box-shadow: var(--shadow-soft);
+            transition: 0.35s;
+            border: 1px solid rgba(163, 42, 42, 0.08);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            min-height: 100px;
+        }
+
+        .info-item::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 4px; height: 100%;
+            background: var(--gradient);
+            transition: 0.35s;
+        }
+
+        .info-item:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .info-item strong {
+            display: block;
+            color: var(--red-soft);
+            margin-bottom: 6px;
+            font-size: 10px;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            font-weight: 700;
+        }
+
+        .info-item span {
+            color: var(--text-dark);
+            font-weight: 600;
+            font-size: 15px;
+            line-height: 1.4;
+            word-break: break-word;
+        }
+
+        /* ===== SKILL & TOOLS ===== */
+        .skills-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .skill-card {
+            background: var(--white);
+            padding: 35px 28px;
+            border-radius: 24px;
+            transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: var(--shadow-soft);
+            text-align: center;
+            border: 1px solid rgba(163, 42, 42, 0.08);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 200px;
+        }
+
+        .skill-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-hover);
+            border-color: rgba(163, 42, 42, 0.3);
+        }
+
+        .skill-icon {
+            width: 65px; height: 65px;
+            margin: 0 auto 18px;
+            border-radius: 18px;
+            background: var(--gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-size: 24px;
+            box-shadow: 0 10px 25px rgba(163, 42, 42, 0.3);
+            transition: 0.4s;
+        }
+
+        .skill-card:hover .skill-icon { transform: rotate(-10deg) scale(1.1); }
+
+        .skill-card h3 {
+            margin-bottom: 10px;
+            color: var(--text-dark);
+            font-size: 17px;
+            font-weight: 700;
+        }
+
+        .skill-card p {
+            color: var(--text-muted);
+            font-size: 13px;
+            line-height: 1.7;
+            margin: 0;
+        }
+
+        .skill-level {
+            margin-top: auto;
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--red-soft);
+            background: var(--cream-2);
+            padding: 4px 12px;
+            border-radius: 20px;
+            display: inline-block;
+        }
+
+        /* ===== PROJECTS ===== */
+        #projects {
+            background: var(--cream-2);
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .project-card {
+            background: var(--white);
+            border-radius: 24px;
+            overflow: hidden;
+            transition: 0.4s;
+            box-shadow: var(--shadow-soft);
+            border: 1px solid rgba(163, 42, 42, 0.08);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .project-card:hover {
+            transform: translateY(-12px);
+            box-shadow: var(--shadow-hover);
+            border-color: rgba(163, 42, 42, 0.3);
+        }
+
+        .project-img {
+            height: 180px;
+            background: var(--gradient-soft);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 65px;
+            color: var(--red-soft);
+            position: relative;
+        }
+
+        .project-img i { transition: 0.4s; }
+        .project-card:hover .project-img i { transform: scale(1.15) rotate(-5deg); }
+
+        .project-info {
+            padding: 28px 30px 30px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .project-info h3 {
+            margin-bottom: 10px;
+            color: var(--text-dark);
+            font-size: 19px;
+            font-weight: 700;
+        }
+
+        .project-info h4 {
+            font-size: 12px;
+            color: var(--red-soft);
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .project-info p, .project-info ul {
+            color: var(--text-muted);
+            font-size: 14px;
+            line-height: 1.7;
+            margin-bottom: 20px;
+            flex-grow: 1;
+            text-align: justify;
+        }
+
+        .tags {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 18px;
+        }
+
+        .tag {
+            background: var(--gradient-soft);
+            color: var(--red-soft);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 700;
+            transition: 0.3s;
+        }
+
+        .project-card:hover .tag {
+            background: var(--gradient);
+            color: var(--white);
+        }
+
+        .project-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: auto;
+            color: var(--red-soft);
+            font-size: 13px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: 0.3s;
+            align-self: flex-start;
+            padding: 10px 20px;
+            border-radius: 50px;
+            background: var(--cream);
+            border: 1px solid rgba(163, 42, 42, 0.2);
+        }
+
+        .project-link:hover {
+            background: var(--gradient);
+            color: var(--white);
+            border-color: transparent;
+            box-shadow: 0 10px 25px rgba(163, 42, 42, 0.3);
+        }
+
+        /* ===== CONTACT ===== */
+        .contact-container {
+            max-width: 750px;
+            margin: 0 auto;
+            text-align: center;
+            background: var(--white);
+            padding: 55px 45px;
+            border-radius: 32px;
+            box-shadow: var(--shadow-soft);
+            border: 1px solid rgba(163, 42, 42, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contact-container p {
+            color: var(--text-muted);
+            margin-bottom: 30px;
+            font-size: 15px;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 14px;
+            margin-bottom: 35px;
+            flex-wrap: wrap;
+        }
+
+        .social-links a {
+            width: 55px; height: 55px;
+            border-radius: 16px;
+            background: var(--cream);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--red-soft);
+            font-size: 20px;
+            text-decoration: none;
+            transition: 0.35s;
+            border: 1px solid rgba(163, 42, 42, 0.1);
+        }
+
+        .social-links a:hover {
+            background: var(--gradient);
+            color: var(--white);
+            transform: translateY(-6px);
+            border-color: transparent;
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            text-align: center;
+            padding: 35px;
+            background: var(--white);
+            color: var(--text-muted);
+            font-size: 14px;
+            border-top: 1px solid rgba(163, 42, 42, 0.1);
+        }
+
+        footer span { color: var(--red-soft); font-weight: 700; }
+
+        /* ===== SCROLL REVEAL ===== */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: 0.8s ease;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 900px) {
+            nav { padding: 12px 20px; }
+            nav ul { gap: 2px; }
+            nav a { padding: 6px 10px; font-size: 12px; }
+            .hero {
+                flex-direction: column-reverse;
+                text-align: center;
+                padding: 130px 6% 60px;
+                gap: 50px;
+            }
+            .hero-text p { text-align: center; }
+            .hero-text h1 { font-size: 42px; }
+            .btn-group { justify-content: center; }
+            .hero-img-wrapper { width: 260px; height: 260px; }
+            .about-grid { grid-template-columns: 1fr; gap: 30px; }
+            .section-title { font-size: 32px; }
+            .skills-container { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 600px) {
+            nav ul { display: none; }
+            .hero-text h1 { font-size: 34px; }
+            .section-title { font-size: 26px; }
+            .info-list { grid-template-columns: 1fr; }
+            .skills-container { grid-template-columns: 1fr; }
+            .projects-grid { grid-template-columns: 1fr; }
+            .contact-container { padding: 40px 25px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- FLOATING DECOR -->
+    <div class="decor decor-1"></div>
+    <div class="decor decor-2"></div>
+
+    <!-- NAVBAR -->
+    <nav>
+        <div class="logo">My<span>Portfolio</span></div>
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">Tentang</a></li>
+            <li><a href="#skills">Skill</a></li>
+            <li><a href="#projects">Proyek</a></li>
+            <li><a href="#contact">Kontak</a></li>
+        </ul>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero" id="home">
+        <div class="hero-text">
+            <h1>Halo, Saya <span class="highlight">Kurnia</span></h1>
+            <h2 class="typing-container">
+                <span id="typing-text"></span><span class="cursor">|</span>
+            </h2>
+            <p>Saya merupakan <strong>fresh graduate</strong> dari SMK Negeri 1 Kawali jurusan Rekayasa Perangkat Lunak (RPL). Saya mampu mengembangkan aplikasi berbasis web menggunakan framework Laravel, PHP, dan database MySQL.</p>
+            <div class="btn-group">
+                <a href="#projects" class="btn btn-primary">Lihat Pengalaman <i class="fas fa-arrow-right"></i></a>
+                <a href="#contact" class="btn btn-outline">Hubungi Saya <i class="fas fa-paper-plane"></i></a>
+            </div>
+        </div>
+        <div class="hero-visual">
+            <div class="hero-img-wrapper">
+               <!-- GANTI FOTO KAMU -->
+               <img src="fotokurnia.jpg" alt="Foto Kurnia">
+            </div>
+        </div>
+    </section>
+
+    <!-- ABOUT & PENDIDIKAN -->
+    <section id="about">
+        <div class="section-header reveal">
+            <span class="section-label">Tentang Saya</span>
+            <h2 class="section-title">Profil & <span>Pendidikan</span></h2>
+        </div>
+        <div class="about-grid">
+            <div class="about-text reveal">
+                <p>Saya senang belajar hal-hal baru, terutama yang berkaitan dengan teknologi. Bagi saya, setiap proyek adalah kesempatan untuk berkembang dan menciptakan sesuatu yang bermanfaat. Saat ini, saya tertarik untuk berkontribusi di bidang <strong>Web Development</strong>.</p>
+                <p>Saya memiliki minat besar di bidang pengembangan web, terutama menggunakan framework Laravel.</p>
+            </div>
+            <div class="info-list reveal">
+                <div class="info-item">
+                    <strong>Pendidikan</strong>
+                    <span>SMK Negeri 1 Kawali</span>
+                </div>
+                <div class="info-item">
+                    <strong>Jurusan</strong>
+                    <span>Rekayasa Perangkat Lunak (RPL)</span>
+                </div>
+                <div class="info-item">
+                    <strong>Tahun</strong>
+                    <span>2024 - 2027</span>
+                </div>
+                <div class="info-item">
+                    <strong>Alamat</strong>
+                    <span>Ciamis, Jawa Barat</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SKILLS & TOOLS -->
+    <section id="skills">
+        <div class="section-header reveal">
+            <span class="section-label">Kemampuan</span>
+            <h2 class="section-title">Hard Skills & <span>Soft Skills</span></h2>
+            <p class="section-subtitle">Keahlian teknis dan interpersonal yang saya kuasai</p>
+        </div>
+        
+        <div class="skills-container" style="margin-bottom: 40px;">
+            <!-- Hard Skills -->
+            <div class="skill-card reveal">
+                <div class="skill-icon"><i class="fab fa-laravel"></i></div>
+                <h3>Laravel & PHP</h3>
+                <p>Membangun aplikasi web modern.</p>
+                <span class="skill-level">Intermediate</span>
+            </div>
+            <div class="skill-card reveal">
+                <div class="skill-icon"><i class="fas fa-database"></i></div>
+                <h3>MySQL (Database)</h3>
+                <p>Mengelola database relasional.</p>
+                <span class="skill-level">Intermediate</span>
+            </div>
+            <div class="skill-card reveal">
+                <div class="skill-icon"><i class="fas fa-code"></i></div>
+                <h3>HTML & CSS</h3>
+                <p>Tampilan website responsive.</p>
+                <span class="skill-level">Intermediate</span>
+            </div>
+            <div class="skill-card reveal">
+                <div class="skill-icon"><i class="fab fa-js"></i></div>
+                <h3>JavaScript</h3>
+                <p>Menambahkan interaksi dinamis.</p>
+                <span class="skill-level">Basic</span>
+            </div>
+            <div class="skill-card reveal">
+                <div class="skill-icon"><i class="fas fa-pen-nib"></i></div>
+                <h3>Desain UI/UX</h3>
+                <p>Desain antarmuka user-friendly.</p>
+                <span class="skill-level">Basic</span>
+            </div>
+            <div class="skill-card reveal">
+                <div class="skill-icon"><i class="fas fa-tools"></i></div>
+                <h3>Tools</h3>
+                <p>VS Code, Git, GitHub, Canva, Figma, Laragon.</p>
+                <span class="skill-level">Dikuasai</span>
+            </div>
+        </div>
+        
+        <div class="skills-container">
+            <!-- Soft Skills -->
+            <div class="skill-card reveal">
+                <div class="skill-icon"><i class="fas fa-users"></i></div>
+                <h3>Kerja Sama Tim</h3>
+                <p>Berkolaborasi dalam proyek kelompok.</p>
+                <span class="skill-level">Intermediate</span>
+            </div>
+            <div class="skill-card reveal">
+                <div class="skill-icon"><i class="fas fa-comments"></i></div>
+                <h3>Komunikasi</h3>
+                <p>Menyampaikan ide dengan jelas.</p>
+                <span class="skill-level">Intermediate</span>
+            </div>
+            <div class="skill-card reveal">
+                <div class="skill-icon"><i class="fas fa-clock"></i></div>
+                <h3>Manajemen Waktu</h3>
+                <p>Menyelesaikan tugas tepat waktu.</p>
+                <span class="skill-level">Intermediate</span>
+            </div>
+            <div class="skill-card reveal">
+                <div class="skill-icon"><i class="fas fa-brain"></i></div>
+                <h3>Problem Solving</h3>
+                <p>Memecahkan masalah teknis.</p>
+                <span class="skill-level">Intermediate</span>
+            </div>
+            <div class="skill-card reveal" style="grid-column: span 2;">
+                <div class="skill-icon"><i class="fas fa-lightbulb"></i></div>
+                <h3>Kemauan Belajar (Fast Learner)</h3>
+                <p>Cepat beradaptasi dengan teknologi baru.</p>
+                <span class="skill-level">Advanced</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section id="projects">
+        <div class="section-header reveal">
+            <span class="section-label">Pengalaman</span>
+            <h2 class="section-title">Proyek <span>Saya</span></h2>
+            <p class="section-subtitle">Karya nyata yang pernah saya kembangkan</p>
+        </div>
+        <div class="projects-grid">
+            <div class="project-card reveal">
+                <div class="project-img"><i class="fas fa-book"></i></div>
+                <div class="project-info">
+                    <h3>Web Developer - Aplikasi Buku Induk Sekolah</h3>
+                    <h4>April 2026 - Oktober 2026 | Fokus Kepegawaian</h4>
+                    <ul style="padding-left: 15px;">
+                        <li>Merancang dan membangun fitur kepegawaian pada aplikasi Buku Induk Sekolah berbasis web menggunakan framework Laravel.</li>
+                        <li>Mengelola serta mengoptimalkan database kepegawaian agar penyimpanan data lebih aman dan terpusat.</li>
+                        <li>Memastikan fungsi, logika sistem, dan antarmuka berjalan dengan baik.</li>
+                    </ul>
+                    <div class="tags">
+                        <span class="tag">Laravel</span>
+                        <span class="tag">MySQL</span>
+                        <span class="tag">PHP</span>
+                    </div>
+                    <a href="https://bukuinduk.smkn1kawali.sch.id/" target="_blank" rel="noopener noreferrer" class="project-link">
+                        Lihat Proyek <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact">
+        <div class="section-header reveal">
+            <span class="section-label">Kontak</span>
+            <h2 class="section-title">Mari <span>Terhubung</span></h2>
+            <p class="section-subtitle">Jangan ragu untuk berdiskusi atau menyapa!</p>
+        </div>
+        <div class="contact-container reveal">
+            <p>Silakan hubungi saya melalui platform di bawah ini. Saya terbuka untuk peluang kerja, magang, atau sekadar berdiskusi seputar Web Development.</p>
+            <div class="social-links">
+                <a href="mailto:ninkurnia047@gmail.com" title="Email"><i class="fas fa-envelope"></i></a>
+                <a href="https://wa.me/6285780433521" target="_blank" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                <a href="https://linkedin.com/in/kurnia-kurnia-0b84b4449" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                <a href="https://github.com/kurn1aaa" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
+            </div>
+            <a href="https://wa.me/6285780433521" target="_blank" class="btn btn-primary">
+                Chat via WhatsApp <i class="fab fa-whatsapp"></i>
+            </a>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>&copy; 2026 <span>Kurnia</span>. Dibuat dengan penuh dedikasi.</p>
+    </footer>
+
+    <!-- SCROLL REVEAL & TYPING SCRIPT -->
+    <script>
+        // 1. Scroll Reveal Animation
+        const reveals = document.querySelectorAll('.reveal');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => {
+                        entry.target.classList.add('active');
+                    }, index * 80);
+                }
+            });
+        }, {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        });
+        reveals.forEach(el => observer.observe(el));
+
+        // 2. Typing Effect (Laravel Aja)
+        const textElement = document.getElementById("typing-text");
+        const words = [
+            "Fresh Graduate RPL", 
+            "Web Developer", 
+            "Laravel", 
+            "Problem Solver"
+        ];
+        let wordIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+        let typeSpeed = 100;
+
+        function type() {
+            const currentWord = words[wordIndex];
+            
+            if (isDeleting) {
+                textElement.textContent = currentWord.substring(0, charIndex - 1);
+                charIndex--;
+                typeSpeed = 50;
+            } else {
+                textElement.textContent = currentWord.substring(0, charIndex + 1);
+                charIndex++;
+                typeSpeed = 100;
+            }
+
+            if (!isDeleting && charIndex === currentWord.length) {
+                isDeleting = true;
+                typeSpeed = 2000;
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                wordIndex = (wordIndex + 1) % words.length;
+                typeSpeed = 500;
+            }
+
+            setTimeout(type, typeSpeed);
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            setTimeout(type, 1000);
+        });
+    </script>
+
+</body>
+</html>
